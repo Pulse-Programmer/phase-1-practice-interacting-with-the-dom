@@ -1,7 +1,8 @@
 let pause = false;
 let count = 0;
 let state = "off";
-let prevNumber = null;
+let prevCount = null;
+let times = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   const countDisp = document.querySelector("#counter");
@@ -9,25 +10,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const addCount = document.querySelector("#plus");
   const minusCount = document.querySelector("#minus");
   const heart = document.querySelector("#heart");
+  const ul = document.querySelector("ul.likes");
+  const form = document.querySelector("form#comment-form");
+  const body = document.querySelector("body");
 
-  // heart.addEventListener("click", () => {
-  //   let countHeart = count;
-  //   //let times = 0;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const p = document.createElement("p");
+    p.textContent = e.target.commentInput.value;
+    body.append(p);
+    form.reset();
+  });
 
-  //   const tracker = (function () {
-  //     let times = 0;
+  heart.addEventListener("click", () => {
+    const li = document.createElement("li");
+    //ul.append(li);
+    //let times = 0;
+    if (count === prevCount) {
+      times++;
+      li.textContent = `${count} has been liked ${times} times`;
+      //ul.append(li);
+    } else {
+      times = 0;
+      times++;
+      li.textContent = `${count} has been liked ${times} time`;
+      ul.append(li);
+    }
 
-  //     return () => {
-  //       times++;
-  //       do {
-  //         console.log(`${count} has been liked ${times} times`);
-  //       } //while (countHeart === prevNumber);
-  //     };
-  //   })();
-
-  //   tracker();
-  //   prevNumber = countHeart;
-  // });
+    prevCount = count;
+  });
 
   addCount.addEventListener("click", () => {
     count++;
