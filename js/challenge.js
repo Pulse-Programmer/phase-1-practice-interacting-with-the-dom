@@ -23,18 +23,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   heart.addEventListener("click", () => {
-    const li = document.createElement("li");
-    //ul.append(li);
-    //let times = 0;
     if (count === prevCount) {
       times++;
-      li.textContent = `${count} has been liked ${times} times`;
-      //ul.append(li);
+
+      ul.lastElementChild.textContent = `${count} has been liked ${times} times`;
     } else {
-      times = 0;
-      times++;
-      li.textContent = `${count} has been liked ${times} time`;
+      times = 1;
+
+      const li = document.createElement("li");
       ul.append(li);
+      li.textContent = `${count} has been liked ${times} time`;
     }
 
     prevCount = count;
@@ -54,9 +52,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state === "off") {
       pause = true;
       state = "on";
+
+      addCount.disabled = true;
+      minusCount.disabled = true;
+      heart.disabled = true;
     } else {
       pause = false;
       state = "off";
+
+      addCount.disabled = false;
+      minusCount.disabled = false;
+      heart.disabled = false;
     }
   });
 
